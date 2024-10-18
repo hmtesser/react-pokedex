@@ -21,3 +21,17 @@ export const fetchPokemonByName = async (name:string) => {
         return null;
     }
 }
+
+export const fetchMultiplePokemonsByName = async (count:number) => {
+    try{
+        const promises = [];
+        for (let i = 1; i<= count; i++){
+            promises.push(fetchPokemonByName(i.toString()));
+        }
+        const results = await Promise.all(promises);
+        return results.filter((pokemon) => pokemon !== null);
+    }catch(error){
+        console.error('error fetching pokemons', error);
+        return [];
+    }
+};
